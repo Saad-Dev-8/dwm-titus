@@ -112,7 +112,7 @@ This guide assumes your system has the latest updates before going ahead with th
 Clone the repository, then compile and install.
 
 ```sh
-git clone https://github.com/ChrisTitusTech/dwm-titus.git && \
+git clone https://github.com/Saad-Dev-8/dwm-titus.git && \
 cd dwm-titus && \
 make  && \
 sudo make install

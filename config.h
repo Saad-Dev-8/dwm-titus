@@ -16,7 +16,7 @@ static const int topbar                       = 1;   /* 0 means bottom bar */
 #define ICONSIZE                              17     /* icon size */
 #define ICONSPACING                           5      /* space between icon and title */
 #define SHOWWINICON                           1      /* 0 means no winicon */
-static const char *fonts[]                    = { "MesloLGS Nerd Font Mono:size=16", "NotoColorEmoji:pixelsize=16:antialias=true:autohint=true" };
+static const char *fonts[]                    = { "MesloLGS Nerd Font Mono:size=12", "NotoColorEmoji:pixelsize=12:antialias=true:autohint=true" };
 static const char normbordercolor[]           = "#3B4252";
 static const char normbgcolor[]               = "#2E3440";
 static const char normfgcolor[]               = "#D8DEE9";
@@ -67,7 +67,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.6; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -92,7 +92,7 @@ static const Layout layouts[] = {
 #define STATUSBAR "dwmblocks"
 /* commands */
 static const char *launchercmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]     = { "ghostty", NULL };
+static const char *termcmd[]     = { "alacritty", NULL };
 
 static Key keys[] = {
     /* modifier                     key                        function        argument */
@@ -108,9 +108,9 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_w,                      spawn,          SHCMD ("feh --randomize --bg-fill ~/Pictures/backgrounds/*")},
     { 0,                            XF86XK_MonBrightnessUp,    spawn,          SHCMD ("xbacklight -inc 10")},
     { 0,                            XF86XK_MonBrightnessDown,  spawn,          SHCMD ("xbacklight -dec 10")},
-    { 0,                            XF86XK_AudioLowerVolume,   spawn,          SHCMD ("amixer sset Master 5%- unmute")},
-    { 0,                            XF86XK_AudioMute,          spawn,          SHCMD ("amixer sset Master $(amixer get Master | grep -q '\\[on\\]' && echo 'mute' || echo 'unmute')")},
-    { 0,                            XF86XK_AudioRaiseVolume,   spawn,          SHCMD ("amixer sset Master 5%+ unmute")},
+    { 0,                            XF86XK_AudioLowerVolume,   spawn,          SHCMD ("pamixer sset Master 5%- unmute")},
+    { 0,                            XF86XK_AudioMute,          spawn,          SHCMD ("pamixer sset Master $(amixer get Master | grep -q '\\[on\\]' && echo 'mute' || echo 'unmute')")},
+    { 0,                            XF86XK_AudioRaiseVolume,   spawn,          SHCMD ("pamixer sset Master 5%+ unmute")},
     { MODKEY|ShiftMask,             XK_b,                      togglebar,      {0} },
     { MODKEY,                       XK_j,                      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,                      focusstack,     {.i = -1 } },
@@ -160,4 +160,6 @@ static Button buttons[] = {
     { ClkTagBar,            0,              Button3,        toggleview,     {0} },
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkStatusText,        0,              Button4,        spawn,          SHCMD("pamixer --increase 5 --allow-boost=false") },
+    { ClkStatusText,        0,              Button5,        spawn,          SHCMD("pamixer --decrease 5") },
 };

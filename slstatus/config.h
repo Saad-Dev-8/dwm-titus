@@ -47,7 +47,7 @@ static const char unknown_str[] = "n/a";
  * ram_used            used memory in GB               NULL
  * run_command         custom shell command            command (echo foo)
  * swap_free           free swap in GB                 NULL
- * swap_perc           swap usage in percent           NULL
+ * swap_perc           swap usage in percent   battery_perc        NULL
  * swap_total          total swap size in GB           NULL
  * swap_used           used swap in GB                 NULL
  * temp                temperature in degree celsius   sensor file
@@ -65,7 +65,11 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ cpu_perc,             "  %s%%",      NULL },
+  { run_command, "%s ", "sh -c 'bat=$(cat /sys/class/power_supply/BAT1/capacity); status=$(cat /sys/class/power_supply/BAT1/status); if [ \"$status\" = \"Charging\" ]; then icon=\"\"; elif [ $bat -ge 80 ]; then icon=\"\"; elif [ $bat -ge 60 ]; then icon=\"\"; elif [ $bat -ge 40 ]; then icon=\"\"; elif [ $bat -ge 20 ]; then icon=\"\"; else icon=\"\"; fi; printf \"%s\" \"$icon\"'" },
+  { battery_state,  "%s ",  "BAT1" },
+  { battery_perc,   "%s%% | ", "BAT1" },
+  { cpu_perc,             "  %s%%",      NULL },
+  { run_command, " |  %s | ", "pamixer --get-volume-human --allow-boost=false" },
 	{ ram_used,             "  %s",         NULL },	
 	{ ram_total,             "/%s",         NULL },	
 	{ datetime, "  %s",           "%m-%d-%Y %I:%M:%S %p " },
